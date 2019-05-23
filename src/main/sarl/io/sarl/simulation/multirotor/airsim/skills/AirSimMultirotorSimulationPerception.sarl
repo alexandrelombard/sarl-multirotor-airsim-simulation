@@ -1,0 +1,46 @@
+package io.sarl.simulation.multirotor.airsim.skills
+
+import fr.utbm.airsim.api.MultirotorClientInterface
+import io.sarl.simulation.multirotor.capacities.MultirotorSimulationPerceptionCapacity
+import io.sarl.simulation.multirotor.perceptions.IMultirotorState
+import org.msgpack.rpc.Client
+import org.msgpack.rpc.loop.EventLoop
+import io.sarl.simulation.multirotor.perceptions.IPose
+import io.sarl.simulation.multirotor.perceptions.IKinematicsState
+import io.sarl.simulation.multirotor.airsim.data.AirSimMultirotorState
+import io.sarl.simulation.multirotor.airsim.data.AirSimPose
+import io.sarl.simulation.multirotor.airsim.data.AirSimKinematicsState
+
+skill AirSimMultirotorSimulationPerception implements MultirotorSimulationPerceptionCapacity {
+
+	val loop = EventLoop.defaultEventLoop()
+	val rpcClient : Client
+	val rpcLibClient : MultirotorClientInterface
+
+	new() {
+		this("127.0.0.1", 41451)
+	}
+
+	new(ipAddress : String, port : Integer) {
+		rpcClient = new Client(ipAddress, port, loop)
+		rpcLibClient = rpcClient.proxy(typeof(MultirotorClientInterface))
+	}
+	
+	override getMultirotorState(vehicleName : String) : IMultirotorState {
+		synchronized (this.rpcLibClient) {
+			return new AirSimMultirotorState(this.rpcLibClient.getMultirotorState(vehicleName))
+		}
+	}
+
+	override getObjectPose(objectName : String) : IPose {
+		synchronized (this.rpcLibClient) {
+			return new AirSimPose(rpcLibClient.simGetObjectPose(objectName))
+		}
+	}
+
+	override getGroundTruthKinematics(vehicleName : String) : IKinematicsState {
+		synchronized (this.rpcLibClient) {
+			return new AirSimKinematicsState(rpcLibClient.simGetGroundTruthKinematics(vehicleName))
+		}
+	}
+}

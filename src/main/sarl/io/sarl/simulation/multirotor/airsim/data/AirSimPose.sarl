@@ -1,0 +1,32 @@
+/** 
+ * 
+ */
+package io.sarl.simulation.multirotor.airsim.data
+
+import fr.utbm.airsim.api.Pose
+import io.sarl.simulation.multirotor.perceptions.IPose
+import io.sarl.math.Vector3
+import io.sarl.math.Quaternion
+
+/** 
+ * Wrapper for Pose from AirSim library
+ * @author Alexandre Lombard
+ * 
+ */
+class AirSimPose extends Object implements IPose {
+	
+	val pose : Pose
+	
+	new(pose: Pose) {
+		this.pose = pose
+	}
+	
+	def getPosition : Vector3 {
+		return new Vector3(this.pose.position.x, this.pose.position.y, this.pose.position.z)
+	}
+	
+	def getOrientation : Quaternion {
+		return new Quaternion(this.pose.orientation.w, this.pose.orientation.x, this.pose.orientation.y, this.pose.orientation.z)
+	}
+	
+}
