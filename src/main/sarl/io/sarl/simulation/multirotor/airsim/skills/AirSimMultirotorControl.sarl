@@ -51,15 +51,15 @@ skill AirSimMultirotorControl implements MultirotorSimulationControlCapacity {
 		}
 	}
 
-	override rotateByYawRate(vehicleName : String, yawRate : Float, duration : Float) {
+	override rotateByYawRate(vehicleName : String, yawRate : double, duration : double) {
 		synchronized (this.rpcLibClient) {
-			rpcLibClient.rotateByYawRateAsync(yawRate, duration, vehicleName)	
+			rpcLibClient.rotateByYawRateAsync(yawRate as float, duration as float, vehicleName)	
 		}
 	}
 
-	override rotateToYaw(vehicleName : String, yaw : Float) {
+	override rotateToYaw(vehicleName : String, yaw : double) {
 		synchronized (this.rpcLibClient) {
-			rpcLibClient.rotateToYawAsync(yaw, defaultTimeout, 5.0f, vehicleName)	
+			rpcLibClient.rotateToYawAsync(yaw as float, defaultTimeout, 5.0f, vehicleName)	
 		}
 	}
 
@@ -69,16 +69,18 @@ skill AirSimMultirotorControl implements MultirotorSimulationControlCapacity {
 		}
 	}
 
-	override moveToPosition(vehicleName : String, x : Float, y : Float, z : Float, velocity: Float) {
+	override moveToPosition(vehicleName : String, x : double, y : double, z : double, velocity : double) {
 		synchronized (this.rpcLibClient) {
-			rpcLibClient.moveToPositionAsync(x, y, z, velocity, defaultTimeout, DrivetrainType.MAX_DEGREE_OF_FREEDOM,
+			rpcLibClient.moveToPositionAsync(x as float, y as float, z as float, velocity as float, defaultTimeout,
+				DrivetrainType.MAX_DEGREE_OF_FREEDOM,
 				new YawMode(), -1.0f, -1.0f, vehicleName)	
 		}
 	}
 
-	override moveByVelocity(vehicleName : String, vx : Float, vy : Float, vz : Float, duration : Float) {
+	override moveByVelocity(vehicleName : String, vx : double, vy : double, vz : double, duration : double) {
 		synchronized (this.rpcLibClient) {
-			rpcLibClient.moveByVelocityAsync(vx, vy, vz, duration, DrivetrainType.MAX_DEGREE_OF_FREEDOM, new YawMode(),
+			rpcLibClient.moveByVelocityAsync(vx as float, vy as float, vz as float, duration as float,
+				DrivetrainType.MAX_DEGREE_OF_FREEDOM, new YawMode(),
 				vehicleName)
 		}
 	}

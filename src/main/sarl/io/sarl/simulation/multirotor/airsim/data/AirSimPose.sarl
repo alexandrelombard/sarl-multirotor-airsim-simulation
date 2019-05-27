@@ -5,7 +5,7 @@ package io.sarl.simulation.multirotor.airsim.data
 
 import fr.utbm.airsim.api.Pose
 import io.sarl.simulation.multirotor.perceptions.IPose
-import io.sarl.math.Vector3
+import org.arakhne.afc.math.geometry.d3.d.Vector3d
 import io.sarl.math.Quaternion
 
 /** 
@@ -21,8 +21,8 @@ class AirSimPose extends Object implements IPose {
 		this.pose = pose
 	}
 	
-	def getPosition : Vector3 {
-		return new Vector3(this.pose.position.x, this.pose.position.y, this.pose.position.z)
+	def getPosition : Vector3d {
+		return new Vector3d(this.pose.position.x, this.pose.position.y, this.pose.position.z)
 	}
 	
 	def getOrientation : Quaternion {

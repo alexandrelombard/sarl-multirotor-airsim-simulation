@@ -4,8 +4,8 @@
 package io.sarl.simulation.multirotor.airsim.data
 
 import fr.utbm.airsim.api.KinematicsState
-import io.sarl.math.Vector3
 import io.sarl.simulation.multirotor.perceptions.IKinematicsState
+import org.arakhne.afc.math.geometry.d3.d.Vector3d
 
 /** 
  * Wrapper for Pose from AirSim library
@@ -20,16 +20,16 @@ class AirSimKinematicsState extends Object implements IKinematicsState {
 		this.kinematicsState = kinematicsState
 	}
 	
-	def getLinearVelocity : Vector3 {
-		return new Vector3(
+	def getLinearVelocity : Vector3d {
+		return new Vector3d(
 			kinematicsState.linearVelocity.x,
 			kinematicsState.linearVelocity.y,
 			kinematicsState.linearVelocity.z
 		)
 	}
 	
-	def getLinearAcceleration : Vector3 {
-		return new Vector3(
+	def getLinearAcceleration : Vector3d {
+		return new Vector3d(
 			kinematicsState.linearAcceleration.x,
 			kinematicsState.linearAcceleration.y,
 			kinematicsState.linearAcceleration.z)
